@@ -25,7 +25,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build with Gradle Wrapper
+      - name: test with Gradle Wrapper
         run: ./gradlew :gateway:presentation:test
 
   build:
@@ -51,13 +51,6 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew :gateway:presentation:build
 
-  scp:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
-    steps:
     - name: Scp jar to EC2
       uses: appleboy/scp-action@master
       with:
@@ -92,7 +85,7 @@ jobs:
         strip_components: 1
       
   deploy:
-    needs: scp
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Setup SSH
