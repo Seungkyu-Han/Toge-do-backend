@@ -27,10 +27,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew :gateway:build
-
-    - name: Debug Source Directory
-      run: ls -al gateway/presentation
+      run: ./gradlew :gateway:presentation:build
       
     - name: Scp to EC2
       uses: appleboy/scp-action@master
@@ -39,9 +36,9 @@ jobs:
         username: ${{secrets.SSH_USER}}
         key: ${{secrets.SSH_PRIVATE_KEY}}
         source: |
-          gateway/presentation/build/libs/presentation.jar
+          gateway/presentation/build/libs/${{GATEWAY_JAR}}.jar
         target: gateway/
-        strip_components: 3
+        strip_components: 4
       
   # deploy:
   #   needs: build
