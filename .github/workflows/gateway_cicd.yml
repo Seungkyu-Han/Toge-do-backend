@@ -29,7 +29,7 @@ jobs:
     - name: Build with Gradle Wrapper
       run: ./gradlew :gateway:presentation:build
       
-    - name: Scp to EC2
+    - name: Scp jar to EC2
       uses: appleboy/scp-action@master
       with:
         host: ${{secrets.SERVER_IP}}
@@ -39,6 +39,28 @@ jobs:
           gateway/presentation/build/libs/${{secrets.GATEWAY_JAR}}.jar
         target: gateway/
         strip_components: 4
+
+    - name: Scp Dockerfile to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{secrets.SERVER_IP}}
+        username: ${{secrets.SSH_USER}}
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        source: |
+          gateway/Dockerfile
+        target: gateway/
+        strip_components: 1
+
+    - name: Scp docker-compose.yml to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{secrets.SERVER_IP}}
+        username: ${{secrets.SSH_USER}}
+        key: ${{secrets.SSH_PRIVATE_KEY}}
+        source: |
+          gateway/docker-compose.yml
+        target: gateway/
+        strip_components: 1
       
   deploy:
     needs: build
