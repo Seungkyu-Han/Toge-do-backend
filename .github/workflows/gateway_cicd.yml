@@ -53,7 +53,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SERVER_IP}} << 'EOF'
           cd gateway
-          docker stop gateway && docker rm gateway && docker rmi gateway:1.0.0
+          docker stop gateway || true && docker rm gateway || true && docker rmi gateway:1.0.0 || true
           docker build -t gateway:1.0.0 .
           docker-compose up -d
           EOF
