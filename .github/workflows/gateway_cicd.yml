@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew :gateway:build
 
     - name: Debug Source Directory
-      run: ls -al gateway
+      run: ls -al gateway/presentation
       
     - name: Scp to EC2
       uses: appleboy/scp-action@master
