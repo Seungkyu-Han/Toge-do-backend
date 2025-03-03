@@ -40,20 +40,20 @@ jobs:
         target: gateway/
         strip_components: 4
       
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Setup SSH
-  #       uses: webfactory/ssh-agent@v0.5.4
-  #       with:
-  #         ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
           
-  #     - name: Deploy Docker Container
-  #       run: |
-  #         ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SERVER_IP}} << 'EOF'
-  #         cd was
-  #         docker stop {컨테이너 이름} && docker rm {컨테이너 이름} && docker rmi {이미지 이름}:latest
-  #         docker build -t {이미지 이름} .
-  #         docker-compose up -d
-  #         EOF
+      - name: Deploy Docker Container
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SERVER_IP}} << 'EOF'
+          cd was
+          docker stop gateway && docker rm gateway && docker rmi gateway:1.0.0
+          docker build -t gateway:1.0.0 .
+          docker-compose up -d
+          EOF
