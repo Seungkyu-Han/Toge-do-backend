@@ -7,7 +7,6 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,7 +27,6 @@ jobs:
 
       - name: Build with Gradle Wrapper
         run: ./gradlew :gateway:presentation:test
-
 
   build:
     need: test
@@ -54,7 +52,7 @@ jobs:
       run: ./gradlew :gateway:presentation:build
 
   scp:
-    need: deploy
+    need: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
