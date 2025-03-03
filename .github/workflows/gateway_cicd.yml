@@ -1,4 +1,4 @@
-name: gateway서버의 CI/CD 설정
+name: gateway 서버의 CI/CD 설정
 
 on:
   push:
