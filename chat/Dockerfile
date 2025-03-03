@@ -4,7 +4,7 @@ WORKDIR /chat
 
 VOLUME /chat
 
-ARG JAR_FILE=presentation/build/libs/presentation.jar
+ARG JAR_FILE=presentation.jar
 
 COPY ${JAR_FILE} chat.jar
 
