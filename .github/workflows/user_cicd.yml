@@ -1,13 +1,12 @@
-name: Gateway서버의 CI/CD 설정
+name: user 서버의 CI/CD 설정
 
 on:
   push:
-    branches: [ "gateway" ]
+    branches: [ "user" ]
   workflow_dispatch:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -27,7 +26,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle Wrapper
-      run: ./gradlew :gateway:presentation:build
+      run: ./gradlew :user:presentation:build
       
     - name: Scp to EC2
       uses: appleboy/scp-action@master
@@ -36,8 +35,8 @@ jobs:
         username: ${{secrets.SSH_USER}}
         key: ${{secrets.SSH_PRIVATE_KEY}}
         source: |
-          gateway/presentation/build/libs/${{secrets.GATEWAY_JAR}}.jar
-        target: gateway/
+          user/presentation/build/libs/${{secrets.USER_JAR}}.jar
+        target: user/
         strip_components: 4
       
   deploy:
@@ -52,8 +51,8 @@ jobs:
       - name: Deploy Docker Container
         run: |
           ssh -o StrictHostKeyChecking=no ${{secrets.SSH_USER}}@${{secrets.SERVER_IP}} << 'EOF'
-          cd gateway
-          docker stop gateway || true && docker rm gateway || true && docker rmi gateway:1.0.0 || true
-          docker build -t gateway:1.0.0 .
+          cd user
+          docker stop user || true && docker rm user || true && docker rmi user:1.0.0 || true
+          docker build -t user:1.0.0 .
           docker-compose up -d
           EOF
