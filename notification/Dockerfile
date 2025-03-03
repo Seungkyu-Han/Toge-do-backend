@@ -4,7 +4,7 @@ WORKDIR /notification
 
 VOLUME /notification
 
-ARG JAR_FILE=presentation/build/libs/presentation.jar
+ARG JAR_FILE=presentation.jar
 
 COPY ${JAR_FILE} notification.jar
 

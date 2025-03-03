@@ -1,0 +1,14 @@
+services:
+  gateway:
+    image: gateway:1.0.0
+    container_name: gateway
+    networks:
+      - vp
+    ports:
+      - "12040:12040"
+    env_file:
+      - /home/ec2-user/.env
+
+networks:
+  vp:
+    external: true
