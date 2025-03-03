@@ -30,7 +30,7 @@ jobs:
       run: ./gradlew :gateway:build
 
     - name: Debug Source Directory
-      run: ls -al /github/workspace
+      run: ls -al gateway
       
     - name: Scp to EC2
       uses: appleboy/scp-action@master
@@ -39,9 +39,9 @@ jobs:
         username: ${{secrets.SSH_USER}}
         key: ${{secrets.SSH_PRIVATE_KEY}}
         source: |
-          gateway/presentation/build/libs/${{secrets.GATEWAY_JAR}}.jar
+          gateway/presentation/build/libs/presentation.jar
         target: gateway/
-        strip_components: 4
+        strip_components: 3
       
   # deploy:
   #   needs: build
