@@ -36,7 +36,7 @@ jobs:
         username: ${{secrets.SSH_USER}}
         key: ${{secrets.SSH_PRIVATE_KEY}}
         source: |
-          gateway/presentation/build/libs/${{GATEWAY_JAR}}.jar
+          gateway/presentation/build/libs/${{secrets.GATEWAY_JAR}}.jar
         target: gateway/
         strip_components: 4
       
