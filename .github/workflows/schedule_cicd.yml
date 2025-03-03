@@ -55,7 +55,7 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{secrets.SERVER_IP}}
-          username: ${{secrets.SSH_schedule}}
+          username: ${{secrets.SSH_USER}}
           key: ${{secrets.SSH_PRIVATE_KEY}}
           source: |
             schedule/presentation/build/libs/${{secrets.SCHEDULE_JAR}}.jar
