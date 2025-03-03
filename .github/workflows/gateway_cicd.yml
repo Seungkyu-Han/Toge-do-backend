@@ -29,7 +29,7 @@ jobs:
         run: ./gradlew :gateway:presentation:test
 
   build:
-    need: test
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -52,7 +52,7 @@ jobs:
       run: ./gradlew :gateway:presentation:build
 
   scp:
-    need: build
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
